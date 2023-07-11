@@ -1,3 +1,5 @@
+// refactor: comment, remove var, reusable functions, readable and least code possible
+
 // given an array of random integers
 // if array length <= 4, should return sum of that array
 // else should find the greatest 4 numbers and sum them
@@ -19,45 +21,31 @@ const trials = [
 // output: 8-noitammus
 // output: 1--noitammus
 
-function rev(str) {
-  var newString = "";
-  for (var i = str.length - 1; i >= 0; i--) {
-    newString += str[i];
-  }
-  return newString;
+// reverses string. eg. Rayan > nayaR
+function reverse(str) {
+  return str.split("").reverse().join("");
 }
 
-function run(trial) {
-  var sumGreatest4;
-  if (trial.length <= 4) {
-    sumGreatest4 = 0;
-    for (var i = 0; i < trial.length; i++) {
-      sumGreatest4 = sumGreatest4 + trial[i];
-    }
-  } else {
-    for (var i = 1; i < trial.length; i++) {
-      for (var j = 0; j < i; j++) {
-        if (trial[i] < trial[j]) {
-          var x = trial[i];
-          trial[i] = trial[j];
-          trial[j] = x;
-        }
-      }
-    }
+function summation (arr) {
+    return arr.reduce((a,b) => a+b);
+}
 
-    arr = trial.slice(-4);
-    sumGreatest4 = 0;
-    for (var i = 0; i < arr.length; i++) {
-      sumGreatest4 = sumGreatest4 + arr[i];
+function calculation(trial) {
+    let sumGreatest4 = 0;
+    if (trial.length <= 4) {
+        sumGreatest4 = summation(trial);
+    } else {
+        trial.sort((a, b) => a - b);
+        sumGreatest4 = summation(trial.slice(-4));
     }
-  }
-  return rev("summation-" + sumGreatest4);
+    return reverse("summation-" + sumGreatest4);
 }
 
 // don't update the below code
 // run the tests
+
 (function () {
-  for (const i in trials) {
-    console.log("output:", run(trials[i]));
-  }
+    for (const i in trials) {
+        console.log("output:", calculation(trials[i]));
+    }
 })();
